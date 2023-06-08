@@ -1,13 +1,13 @@
 import { IsEmail, IsNotEmpty, MinLength } from 'class-validator';
 
 export class CreatePartnerDTO {
-  @IsNotEmpty({ message: 'O nome não pode ser vazio' })
+  @IsNotEmpty({ message: 'Partner name cannot be empty' })
   name: string;
 
-  @IsNotEmpty({ message: 'O email não pode ser vazio' })
-  @IsEmail(undefined, { message: 'O e-mail informado é inválido' })
+  @IsNotEmpty({ message: 'Partner email cannot be empty' })
+  @IsEmail(undefined, { message: 'Invalid email' })
   email: string;
 
-  @MinLength(6, { message: 'A senha precisa ter pelo menos 6 caracteres' })
+  @MinLength(6, { message: 'The password must be at least 6 characters long' })
   password: string;
 }

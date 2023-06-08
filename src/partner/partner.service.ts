@@ -1,9 +1,13 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+
 import { ListPartnerDTO } from './dto/ListPartner.dto';
 import { UpdatePartnerDTO } from './dto/UpdatePartner.dto';
+
 import { PartnerEntity } from './partner.entity';
-import { Repository } from 'typeorm';
+
+
 
 @Injectable()
 export class PartnerService {
@@ -12,6 +16,7 @@ export class PartnerService {
     private readonly partnerRepository: Repository<PartnerEntity>,
   ) {}
 
+  
   async getPartners() : Promise<ListPartnerDTO[] | undefined> {
     const savedPartners = await this.partnerRepository.find();
     const partnersList = savedPartners.map(
@@ -27,8 +32,26 @@ export class PartnerService {
     return partnerResp;
   }
 
-  async createPartner(PartnerEntity: PartnerEntity) {
-    await this.partnerRepository.save(PartnerEntity);
+  async createPartner(partnerToCreate: PartnerEntity) {
+    // const clientsChecked = await this.checkClientsToCreate(partnerToCreate.clients);
+    // const projectsChecked = await this.checkProjectsToCreate(partnerToCreate.projects);
+
+    // if (!clientsChecked && projectsChecked) {
+    //   await this.partnerRepository.save({...partnerToCreate, projects: projectsChecked});
+    //   return {...partnerToCreate, projects: projectsChecked}
+
+    // } else if (!projectsChecked && clientsChecked) {
+    //   await this.partnerRepository.save({...partnerToCreate, clients: clientsChecked});
+    //   return {...partnerToCreate, clients: clientsChecked}
+
+    // } else {
+    //   await this.partnerRepository.save(partnerToCreate);
+    //   return partnerToCreate;
+    // }
+    await this.partnerRepository.save(partnerToCreate);
+    const partnerCreated = await this.getPartnerById(partnerToCreate.id);
+
+    return partnerCreated;
   }
 
   async updatePartner(id: string, newData: UpdatePartnerDTO)  {
@@ -43,7 +66,50 @@ export class PartnerService {
     await this.partnerRepository.delete(id);
   }
 
-  
+  // async getClients() {
+  //   const clientsSaved = await this.partnerClientsRepository.find();
+  //   const clientsList = clientsSaved.map(
+  //     (clients) => new ListClients(clients.id, clients.name,),
+  //   );
+  //   return clientsList;
+  // }
 
+  // async getProjects() {
+  //   const projectsSaved = await this.partnerProjectsRepository.find();
+  //   const projectsList = projectsSaved.map(
+  //     (projects) => new ListProjects(projects.id, projects.name,),
+  //   );
+  //   return projectsList;
+  // }
+
+  // async checkClientsToCreate( clientsToCreate ) : Promise<ListClients[]> {
+  //   const clientsSaved = await this.getClients();
+  //   let clientsToSave : Array<any> = [];
+
+  //   clientsToSave = clientsSaved.map(clientSaved => {
+  //     clientsToCreate.forEach(clientToCreate => {
+  //       if (clientToCreate.name === clientSaved.name) 
+  //         return { id: clientSaved.id, name: clientSaved.name }
+  //       else return { id: clientToCreate.id, name: clientToCreate.name }
+  //     })
+  //   })
+
+  //   return clientsToSave;
+  // }
+
+  // async checkProjectsToCreate( projectsToCreate ) : Promise<ListProjects[]> {
+  //   const projectsSaved = await this.getProjects();
+  //   let projectsToSave : Array<any> = [];
+    
+  //   projectsToSave = projectsSaved.map(projectSaved => {
+  //     projectsToCreate.forEach(projectToCreate => {
+  //       if (projectToCreate.name === projectSaved.name) 
+  //         return { id: projectSaved.id, name: projectSaved.name }
+  //       else return { id: projectToCreate.id, name: projectToCreate.name }
+  //     })
+  //   })
+
+  //   return projectsToSave;
+  // }
   
 }

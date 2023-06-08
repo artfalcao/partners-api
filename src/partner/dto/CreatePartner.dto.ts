@@ -9,6 +9,20 @@ import {
 import { PartnerEntity } from '../partner.entity';
 import { Type } from 'class-transformer';
 
+// export class ListClients {
+//   constructor(
+//     readonly id: string, 
+//     readonly name: string, 
+//   ) {}
+// }
+
+// export class ListProjects {
+//   constructor(
+//     readonly id: string, 
+//     readonly name: string, 
+//   ) {}
+// }
+
 export class ClientPartnerDTO {
   id: string;
 

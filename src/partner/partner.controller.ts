@@ -42,10 +42,10 @@ export class PartnerController {
     partnerEntity.projects = partnerData.projects
     partnerEntity.id = uuid();
 
-    await this.partnerService.createPartner(partnerEntity);
+    const partnerCreated = await this.partnerService.createPartner(partnerEntity);
 
     return {
-      partner: new ListPartnerDTO(partnerEntity.id, partnerEntity.name, partnerEntity.email, partnerEntity.clients, partnerEntity.projects),
+      partner: partnerCreated,
       message: 'Partner created with success',
     };
   }

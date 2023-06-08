@@ -15,14 +15,14 @@ export class PartnerService {
   async getPartners() : Promise<ListPartnerDTO[] | undefined> {
     const savedPartners = await this.partnerRepository.find();
     const partnersList = savedPartners.map(
-      (partner) => new ListPartnerDTO(partner.id, partner.name, partner.email),
+      (partner) => new ListPartnerDTO(partner.id, partner.name, partner.email, partner.clients, partner.projects),
     );
     return partnersList;
   }
 
   async getPartnerById(id: string) : Promise<ListPartnerDTO | undefined> {
     const partner = await this.partnerRepository.findOne({ where: { id }});
-    const partnerResp = new ListPartnerDTO(partner.id, partner.name, partner.email);
+    const partnerResp = new ListPartnerDTO(partner.id, partner.name, partner.email, partner.clients, partner.projects);
 
     return partnerResp;
   }
@@ -40,10 +40,7 @@ export class PartnerService {
   }
   
   async deletePartner(id: string) {
-    const partnerRemoved = await this.partnerRepository.delete(id);
-    console.log(partnerRemoved);
-
-    return partnerRemoved;
+    await this.partnerRepository.delete(id);
   }
 
   

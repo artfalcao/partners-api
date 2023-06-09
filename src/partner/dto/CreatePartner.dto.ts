@@ -30,7 +30,7 @@ export class ProjectsPartnerDTO {
 }
 
 export class CreatePartnerDTO {
-  @IsPartnerNameUnique({message: "Parceiro com nome já existente"})
+  //@IsPartnerNameUnique({message: "Parceiro com nome já existente"})
   @IsNotEmpty({ message: 'Campo nome é obrigatório' })
   name: string;
 

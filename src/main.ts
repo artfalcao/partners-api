@@ -9,7 +9,7 @@ async function bootstrap() {
     transform: true
   }));
   app.enableCors();
-  useContainer(app.select(AppModule), { fallbackOnErrors: true });
+  //useContainer(app.select(AppModule), { fallbackOnErrors: true });
   await app.listen(5000);
 }
 bootstrap();

@@ -40,21 +40,6 @@ export class PartnerService {
   }
 
   async createPartner(partnerToCreate: PartnerEntity) {
-    // const clientsChecked = await this.checkClientsToCreate(partnerToCreate.clients);
-    // const projectsChecked = await this.checkProjectsToCreate(partnerToCreate.projects);
-
-    // if (!clientsChecked && projectsChecked) {
-    //   await this.partnerRepository.save({...partnerToCreate, projects: projectsChecked});
-    //   return {...partnerToCreate, projects: projectsChecked}
-
-    // } else if (!projectsChecked && clientsChecked) {
-    //   await this.partnerRepository.save({...partnerToCreate, clients: clientsChecked});
-    //   return {...partnerToCreate, clients: clientsChecked}
-
-    // } else {
-    //   await this.partnerRepository.save(partnerToCreate);
-    //   return partnerToCreate;
-    // }
     await this.partnerRepository.save(partnerToCreate);
     const partnerCreated = await this.getPartnerById(partnerToCreate.id);
 

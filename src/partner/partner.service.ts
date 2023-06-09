@@ -20,14 +20,21 @@ export class PartnerService {
   async getPartners() : Promise<ListPartnerDTO[] | undefined> {
     const savedPartners = await this.partnerRepository.find();
     const partnersList = savedPartners.map(
-      (partner) => new ListPartnerDTO(partner.id, partner.name, partner.email, partner.clients, partner.projects),
+      (partner) => new ListPartnerDTO(partner.id, partner.name, partner.description, partner.repositoryGit, partner.urlDoc, partner.clients, partner.projects),
     );
     return partnersList;
   }
 
   async getPartnerById(id: string) : Promise<ListPartnerDTO | undefined> {
     const partner = await this.partnerRepository.findOne({ where: { id }});
-    const partnerResp = new ListPartnerDTO(partner.id, partner.name, partner.email, partner.clients, partner.projects);
+    const partnerResp = new ListPartnerDTO(partner.id, partner.name, partner.description, partner.repositoryGit, partner.urlDoc, partner.clients, partner.projects);
+
+    return partnerResp;
+  }
+
+  async findByName(name: string) : Promise<ListPartnerDTO | undefined> {
+    const partner = await this.partnerRepository.findOne({ where: { name } });
+    const partnerResp = new ListPartnerDTO(partner.id, partner.name, partner.description, partner.repositoryGit, partner.urlDoc, partner.clients, partner.projects);
 
     return partnerResp;
   }

@@ -1,33 +1,19 @@
 import { 
-  IsEmail, 
   IsNotEmpty, 
-  MinLength, 
+  IsUrl,
   IsString, 
   ValidateNested, 
   ArrayMinSize, 
   IsArray } from 'class-validator';
 import { PartnerEntity } from '../partner.entity';
 import { Type } from 'class-transformer';
-
-// export class ListClients {
-//   constructor(
-//     readonly id: string, 
-//     readonly name: string, 
-//   ) {}
-// }
-
-// export class ListProjects {
-//   constructor(
-//     readonly id: string, 
-//     readonly name: string, 
-//   ) {}
-// }
+import { IsPartnerNameUnique } from '../is-partnerName-unique.validator';
 
 export class ClientPartnerDTO {
   id: string;
 
   @IsString()
-  @IsNotEmpty({ message: 'Client Name cannot be empty' })
+  @IsNotEmpty({ message: 'Campo nome é obrigatório' })
   name: string;
 
   partner: PartnerEntity;
@@ -37,22 +23,30 @@ export class ProjectsPartnerDTO {
   id: string;
 
   @IsString()
-  @IsNotEmpty({ message: 'Product Name cannot be empty' })
+  @IsNotEmpty({ message: 'Campo nome é obrigatório' })
   name: string;
 
   partner: PartnerEntity;
 }
 
 export class CreatePartnerDTO {
-  @IsNotEmpty({ message: 'Partner name cannot be empty' })
+  @IsPartnerNameUnique({message: "Parceiro com nome já existente"})
+  @IsNotEmpty({ message: 'Campo nome é obrigatório' })
   name: string;
 
-  @IsNotEmpty({ message: 'Partner email cannot be empty' })
-  @IsEmail(undefined, { message: 'Invalid email' })
-  email: string;
+  @IsNotEmpty({ message: 'Campo descrição é obrigatório' })
+  @IsString()
+  description: string;
 
-  @MinLength(6, { message: 'The password must be at least 6 characters long' })
-  password: string;
+  @IsNotEmpty({ message: 'Campo repositório do git é obrigatório' })
+  @IsString()
+  @IsUrl()
+  repositoryGit: string;
+
+  @IsNotEmpty({ message: 'Campo repositório do git é obrigatório' })
+  @IsString()
+  @IsUrl()
+  urlDoc: string;
 
   @ValidateNested()
   @IsArray()

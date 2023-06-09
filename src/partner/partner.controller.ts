@@ -10,7 +10,6 @@ import {
 import { v4 as uuid } from 'uuid';
 import { UpdatePartnerDTO } from './dto/UpdatePartner.dto';
 import { CreatePartnerDTO } from './dto/CreatePartner.dto';
-import { ListPartnerDTO } from './dto/ListPartner.dto';
 import { PartnerEntity } from './partner.entity';
 import { PartnerService } from './partner.service';
 
@@ -36,8 +35,9 @@ export class PartnerController {
   async createPartner(@Body() partnerData: CreatePartnerDTO) {
     const partnerEntity = new PartnerEntity();
     partnerEntity.name = partnerData.name;
-    partnerEntity.email = partnerData.email;
-    partnerEntity.password = partnerData.password;
+    partnerEntity.description = partnerData.description;
+    partnerEntity.repositoryGit = partnerData.repositoryGit;
+    partnerEntity.urlDoc= partnerData.urlDoc;
     partnerEntity.clients = partnerData.clients;
     partnerEntity.projects = partnerData.projects
     partnerEntity.id = uuid();
@@ -46,7 +46,7 @@ export class PartnerController {
 
     return {
       partner: partnerCreated,
-      message: 'Partner created with success',
+      message: 'Parceiro cadastrado com sucesso',
     };
   }
 
@@ -63,7 +63,7 @@ export class PartnerController {
 
     return {
       partner: partnerUpdated,
-      message: 'Partner updated with success',
+      message: 'Dados atualizados com sucesso',
     };
   }
 
@@ -72,7 +72,7 @@ export class PartnerController {
     await this.partnerService.deletePartner(id);
 
     return {
-      message: 'Partner removed with success'
+      message: 'Parceiro removido com sucesso'
     };
   }
 

@@ -6,7 +6,7 @@ import {
 } from 'typeorm';
 import { PartnerEntity } from './partner.entity';
 
-@Entity({ name: 'partner_clients' })
+@Entity({ name: 'parceiros_clientes' })
 export class PartnerClientsEntity {
   @PrimaryGeneratedColumn("uuid")
   id: string;

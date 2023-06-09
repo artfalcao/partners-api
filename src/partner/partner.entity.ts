@@ -10,7 +10,7 @@ import {
 import { PartnerClientsEntity } from './partner-clients.entity';
 import { PartnerProjectsEntity } from './partner-projects.entity'
 
-@Entity({ name: 'partners' })
+@Entity({ name: 'parceiros' })
 export class PartnerEntity {
   @PrimaryGeneratedColumn('uuid')
   id: string;
@@ -18,11 +18,14 @@ export class PartnerEntity {
   @Column({ name: 'name', length: 100, nullable: false })
   name: string;
 
-  @Column({ name: 'email', length: 100, nullable: false })
-  email: string;
+  @Column({ name: 'description', length: 255, nullable: false })
+  description: string;
 
-  @Column({ name: 'password', length: 255, nullable: false })
-  password: string;
+  @Column({ name: 'repositoryGit', length: 255, nullable: false })
+  repositoryGit: string;
+
+  @Column({ name: 'urlDoc', length: 255, nullable: false })
+  urlDoc: string;
 
   @OneToMany(() => PartnerClientsEntity, (partnerClientsEntity) =>
       partnerClientsEntity.partner, { cascade: true, eager: true })

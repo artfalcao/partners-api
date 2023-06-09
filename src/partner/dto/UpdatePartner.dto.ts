@@ -2,25 +2,29 @@ import { Type } from 'class-transformer';
 import { 
   ArrayMinSize, 
   IsArray, 
-  IsEmail, 
-  IsNotEmpty, 
+  IsString, 
   IsOptional, 
-  MinLength, 
-  ValidateNested } from 'class-validator';
+  IsUrl, 
+  ValidateNested, 
+  } from 'class-validator';
 import { ClientPartnerDTO, ProjectsPartnerDTO } from './CreatePartner.dto';
 
 export class UpdatePartnerDTO {
-  @IsNotEmpty({ message: 'Partner name cannot be empty' })
+  @IsString()
   @IsOptional()
   name: string;
 
-  @IsEmail(undefined, { message: 'Partner email cannot be empty' })
+  @IsString()
   @IsOptional()
-  email: string;
+  description: string;
 
-  @MinLength(6, { message: 'The password must be at least 6 characters long' })
+  @IsUrl()
   @IsOptional()
-  password: string;
+  repositoryGit: string;
+
+  @IsUrl()
+  @IsOptional()
+  urlDoc: string;
 
   @ValidateNested()
   @IsArray()

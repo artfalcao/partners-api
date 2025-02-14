@@ -2,7 +2,7 @@ import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 
-import { PartnerModule } from './partner/partner.module';
+import { PartnerModule } from './modules/partner/partner.module';
 import { PostgresConfigService } from './config/postgres.config.services';
 
 @Module({

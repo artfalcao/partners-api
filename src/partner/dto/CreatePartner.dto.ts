@@ -9,6 +9,9 @@ export class CreatePartnerDTO {
   @IsNotEmpty({ message: 'Campo nome é obrigatório' })
   name: string;
 
+  @IsNotEmpty({ message: 'Campo passsword é obrigatório' })
+  password: string;
+
   @IsNotEmpty({ message: 'Campo descrição é obrigatório' })
   @IsString()
   description: string;

@@ -15,6 +15,9 @@ export class PartnerEntity {
   @Column({ name: 'name', length: 100, nullable: false })
   name: string;
 
+  @Column({ name: 'password', length: 255, nullable: false })
+  password: string;
+
   @Column({ name: 'description', length: 255, nullable: false })
   description: string;
 

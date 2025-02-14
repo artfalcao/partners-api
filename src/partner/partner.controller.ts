@@ -12,6 +12,7 @@ import { UpdatePartnerDTO } from './dto/UpdatePartner.dto';
 import { CreatePartnerDTO } from './dto/CreatePartner.dto';
 import { PartnerEntity } from './partner.entity';
 import { PartnerService } from './partner.service';
+import { HashPasswordPipe } from 'src/pipes/hashPassword.pipe';
 
 @Controller('/partners')
 export class PartnerController {
@@ -24,11 +25,6 @@ export class PartnerController {
     return savedPartners;
   }
 
-  @Get('/testi')
-  async teste() {
-    return 'OK';
-  }
-
   @Get('/:id')
   async listPartner(@Param('id') id : string ) {
     const partner = await this.partnerService.getPartnerById(id);
@@ -37,9 +33,13 @@ export class PartnerController {
   }
 
   @Post()
-  async createPartner(@Body() partnerData: CreatePartnerDTO) {
+  async createPartner(
+    @Body() { password, ...partnerData }: CreatePartnerDTO,
+    @Body('password', HashPasswordPipe) hashedPassword: string,
+  ) {
     const partnerEntity = new PartnerEntity();
     partnerEntity.name = partnerData.name;
+    partnerEntity.password = hashedPassword;
     partnerEntity.description = partnerData.description;
     partnerEntity.repositoryGit = partnerData.repositoryGit;
     partnerEntity.urlDoc= partnerData.urlDoc;

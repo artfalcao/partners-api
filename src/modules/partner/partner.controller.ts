@@ -5,7 +5,8 @@ import {
   Get,
   Post,
   Put,
-  Delete
+  Delete,
+  UseGuards
 } from '@nestjs/common';
 import { v4 as uuid } from 'uuid';
 import { UpdatePartnerDTO } from './dto/UpdatePartner.dto';
@@ -13,7 +14,9 @@ import { CreatePartnerDTO } from './dto/CreatePartner.dto';
 import { PartnerEntity } from './partner.entity';
 import { PartnerService } from './partner.service';
 import { HashPasswordPipe } from 'src/pipes/hashPassword.pipe';
+import { AuthGuard } from '../auth/auth.guard';
 
+@UseGuards(AuthGuard)
 @Controller('/partners')
 export class PartnerController {
   constructor(private partnerService: PartnerService) {}
@@ -39,6 +42,7 @@ export class PartnerController {
   ) {
     const partnerEntity = new PartnerEntity();
     partnerEntity.name = partnerData.name;
+    partnerEntity.email = partnerData.email;
     partnerEntity.password = hashedPassword;
     partnerEntity.description = partnerData.description;
     partnerEntity.repositoryGit = partnerData.repositoryGit;

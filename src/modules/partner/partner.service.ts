@@ -7,8 +7,6 @@ import { UpdatePartnerDTO } from './dto/UpdatePartner.dto';
 
 import { PartnerEntity } from './partner.entity';
 
-
-
 @Injectable()
 export class PartnerService {
   constructor(
@@ -20,28 +18,32 @@ export class PartnerService {
   async getPartners() : Promise<ListPartnerDTO[] | undefined> {
     const savedPartners = await this.partnerRepository.find();
     const partnersList = savedPartners.map(
-      (partner) => new ListPartnerDTO(partner.id, partner.name, partner.description, partner.repositoryGit, partner.urlDoc),
+      (partner) => new ListPartnerDTO(partner.id, partner.name, partner.email, partner.description, partner.repositoryGit, partner.urlDoc),
     );
     return partnersList;
   }
 
   async getPartnerById(id: string) : Promise<ListPartnerDTO | undefined> {
     const partner = await this.partnerRepository.findOne({ where: { id }});
-    const partnerResp = new ListPartnerDTO(partner.id, partner.name, partner.description, partner.repositoryGit, partner.urlDoc);
+    const partnerResp = new ListPartnerDTO(partner.id, partner.name, partner.email, partner.description, partner.repositoryGit, partner.urlDoc);
 
     return partnerResp;
   }
 
   async findByName(name: string) : Promise<ListPartnerDTO | undefined> {
     const partner = await this.partnerRepository.findOne({ where: { name } });
-    const partnerResp = new ListPartnerDTO(partner.id, partner.name, partner.description, partner.repositoryGit, partner.urlDoc);
+    const partnerResp = new ListPartnerDTO(partner.id, partner.name, partner.email, partner.description, partner.repositoryGit, partner.urlDoc);
 
     return partnerResp;
   }
 
+  async findByEmail(email: string) {
+    return await this.partnerRepository.findOne({ where: { email } });
+  }
+
   async exitsWithGitRepo(gitRepo: string) : Promise<boolean> {
     const partner = await this.partnerRepository.findOne({ where: { repositoryGit: gitRepo } });
-    const partnerResp = new ListPartnerDTO(partner.id, partner.name, partner.description, partner.repositoryGit, partner.urlDoc);
+    const partnerResp = new ListPartnerDTO(partner.id, partner.name, partner.email, partner.description, partner.repositoryGit, partner.urlDoc);
 
     return partner ? true : false
   }

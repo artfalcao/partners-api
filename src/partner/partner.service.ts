@@ -39,6 +39,13 @@ export class PartnerService {
     return partnerResp;
   }
 
+  async exitsWithGitRepo(gitRepo: string) : Promise<boolean> {
+    const partner = await this.partnerRepository.findOne({ where: { repositoryGit: gitRepo } });
+    const partnerResp = new ListPartnerDTO(partner.id, partner.name, partner.description, partner.repositoryGit, partner.urlDoc);
+
+    return partner ? true : false
+  }
+
   async createPartner(partnerToCreate: PartnerEntity) {
     await this.partnerRepository.save(partnerToCreate);
     const partnerCreated = await this.getPartnerById(partnerToCreate.id);

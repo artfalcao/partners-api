@@ -24,6 +24,11 @@ export class PartnerController {
     return savedPartners;
   }
 
+  @Get('/testi')
+  async teste() {
+    return 'OK';
+  }
+
   @Get('/:id')
   async listPartner(@Param('id') id : string ) {
     const partner = await this.partnerService.getPartnerById(id);

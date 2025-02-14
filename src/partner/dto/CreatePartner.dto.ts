@@ -3,30 +3,9 @@ import {
   IsUrl,
   IsString, 
 } from 'class-validator';
-import { PartnerEntity } from '../partner.entity';
-
-export class ClientPartnerDTO {
-  id: string;
-
-  @IsString()
-  @IsNotEmpty({ message: 'Campo nome é obrigatório' })
-  name: string;
-
-  partner: PartnerEntity;
-}
-
-export class ProjectsPartnerDTO {
-  id: string;
-
-  @IsString()
-  @IsNotEmpty({ message: 'Campo nome é obrigatório' })
-  name: string;
-
-  partner: PartnerEntity;
-}
+import { GitRepoIsUnique } from '../validators/uniqueGitRepo.validator';
 
 export class CreatePartnerDTO {
-  //@IsPartnerNameUnique({message: "Parceiro com nome já existente"})
   @IsNotEmpty({ message: 'Campo nome é obrigatório' })
   name: string;
 
@@ -35,8 +14,8 @@ export class CreatePartnerDTO {
   description: string;
 
   @IsNotEmpty({ message: 'Campo repositório do git é obrigatório' })
-  @IsString()
   @IsUrl()
+  @GitRepoIsUnique({message: "Parceiro com git já existente"})
   repositoryGit: string;
 
   @IsNotEmpty({ message: 'Campo repositório do git é obrigatório' })

@@ -5,10 +5,7 @@ import {
   UpdateDateColumn,
   DeleteDateColumn,
   PrimaryGeneratedColumn,
-  OneToMany,
 } from 'typeorm';
-import { PartnerClientsEntity } from './partner-clients.entity';
-import { PartnerProjectsEntity } from './partner-projects.entity'
 
 @Entity({ name: 'parceiros' })
 export class PartnerEntity {
@@ -26,14 +23,6 @@ export class PartnerEntity {
 
   @Column({ name: 'urlDoc', length: 255, nullable: false })
   urlDoc: string;
-
-  @OneToMany(() => PartnerClientsEntity, (partnerClientsEntity) =>
-      partnerClientsEntity.partner, { cascade: true, eager: true })
-  clients: PartnerClientsEntity[];
-
-  @OneToMany(() => PartnerProjectsEntity, (partnerProjectsEntity) =>
-      partnerProjectsEntity.partner, { cascade: true, eager: true })
-  projects: PartnerProjectsEntity[];
 
   @CreateDateColumn({ name: 'created_at' })
   createdAt: string;

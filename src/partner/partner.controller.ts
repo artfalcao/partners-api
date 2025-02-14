@@ -38,8 +38,6 @@ export class PartnerController {
     partnerEntity.description = partnerData.description;
     partnerEntity.repositoryGit = partnerData.repositoryGit;
     partnerEntity.urlDoc= partnerData.urlDoc;
-    partnerEntity.clients = partnerData.clients;
-    partnerEntity.projects = partnerData.projects
     partnerEntity.id = uuid();
 
     const partnerCreated = await this.partnerService.createPartner(partnerEntity);

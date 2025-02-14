@@ -2,12 +2,8 @@ import {
   IsNotEmpty, 
   IsUrl,
   IsString, 
-  ValidateNested, 
-  ArrayMinSize, 
-  IsArray } from 'class-validator';
+} from 'class-validator';
 import { PartnerEntity } from '../partner.entity';
-import { Type } from 'class-transformer';
-import { IsPartnerNameUnique } from '../is-partnerName-unique.validator';
 
 export class ClientPartnerDTO {
   id: string;
@@ -47,16 +43,4 @@ export class CreatePartnerDTO {
   @IsString()
   @IsUrl()
   urlDoc: string;
-
-  @ValidateNested()
-  @IsArray()
-  @ArrayMinSize(1)
-  @Type(() => ClientPartnerDTO)
-  clients: ClientPartnerDTO[];
-
-  @ValidateNested()
-  @IsArray()
-  @ArrayMinSize(1)
-  @Type(() => ProjectsPartnerDTO)
-  projects: ProjectsPartnerDTO[];
 }
